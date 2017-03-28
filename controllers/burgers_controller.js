@@ -1,5 +1,5 @@
 const methodOverride = require("method-override");
-const connection = require("../config/orm.js");
+const data = require("../config/data.js");
 const express = require("express")
 
 module.exports = function(app) {
@@ -14,27 +14,36 @@ module.exports = function(app) {
 	});
  
  	router.get("/index", (req,res)=>{
- 		connection.selectAll().then((burgers)=>{
+ 		data.selectAll().then((burgers)=>{
+ 			console.log('about to render', burgers)
  			res.render("index", {burgers:burgers});
  		}).catch((err)=>{
- 			res.sendStatus(503).json(err);
+ 			res.json(err);
  		});
  		
  	});
 
  	router.post("/new", (req,res)=>{
- 		connection.insertOne(req.body.burger_name).then((success)=>{
+ 		data.insertBurger(req.body.burger_name).then((success)=>{
  			res.redirect("/index");
  		}).catch((err)=>{
- 			res.sendStatus(503).json(err);
+ 			res.json(err);
  		});
  	});
 
- 	router.put("/update", (req, res)=>{
- 		connection.updateOne(req.body.id).then((success)=>{
+ 	router.put("/devour", (req, res)=>{
+ 		data.devourBurger(req.body.id).then((success)=>{
  			res.redirect("/index");
  		}).catch((err)=>{
- 			res.sendStatus(503).json(err);
+ 			res.json(err);
+ 		});
+ 	});
+
+ 	router.post("/customer", (req, res)=>{
+ 		data.updateBurgersCustomer(req.body.customerName, req.body.burgerId).then((success)=>{
+ 			res.redirect("/index");
+ 		}).catch((err)=>{
+ 			res.json(err);
  		});
  	});
 

@@ -2,6 +2,7 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
+const db = require("./models");
 
 // Create an instance of the express app.
 var app = express();
@@ -22,5 +23,9 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 require("./controllers/burgers_controller.js")(app);
 
-// Initiate the listener.
-app.listen(port);
+db.sequelize.sync({force: true}).then(function() {
+
+  app.listen(port, function() {
+    console.log("App listening on PORT " + port);
+  });
+});
