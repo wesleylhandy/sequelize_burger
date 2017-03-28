@@ -1,0 +1,12 @@
+body {
+	background-color: #A3DEC9;
+}
+
+.right {
+	float: right;
+}
+
+.burgers {
+	max-height: 171px;
+	overflow: auto;
+}

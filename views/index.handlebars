@@ -1,0 +1,65 @@
+<div class='row'>
+  <div class = "col-xs-12">
+    <center>
+      <div id="burger">
+        <img class="img img-responsive" src="assets/images/burger-lg.png">
+      </div>
+    </center>
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="col-xs-12 col-md-6 burgers">
+
+    <ul class="list-group">
+      <li class="list-group-item active"><h3 class="list-group-item-heading">Yummy Burgers Ready to Eat</h3></li>
+
+      {{#each burgers}}
+        {{#if devoured}}
+
+        {{else}}
+          <li class="list-group-item">
+              {{id}}. {{burger_name}}
+              <span class="right">
+                <form action="/update?_method=PUT" method="POST">
+                  <input type="hidden" name="id" value="{{id}}">
+                  <button type="submit" class="badge">Devour</button>
+                </form>
+              </span>             
+          </li>
+
+        {{/if}}
+      {{/each}}
+    </ul>
+
+  </div>
+
+  <div class="col-xs-12 col-md-6 burgers">
+
+    <ul class="list-group">
+        <li class="list-group-item active"><h3 class="list-group-item-heading">Burgers That Have Been Eaten</h3></li>
+
+        {{#each burgers}}
+
+          {{#if devoured}}
+          <li class="list-group-item">
+              {{id}}. {{burger_name}}
+          </li>
+
+          {{/if}}
+        {{/each}}
+      </ul>
+
+  </div>
+</div>
+
+
+<form method="POST" action="/new" class="form">
+  <div class="form-group">
+    <label for="new-burger"><h2>What Burger Would You Like To Eat Next</h2></label>
+  	<textarea type="text" name="burger_name" id="new-burger" class="form-control"></textarea>
+  	<button class = "btn btn-primary" type="submit">Add Burger</button>
+  </div>
+</form>
+
